@@ -5,7 +5,6 @@ import (
 	"errors"
 	"flag"
 	_ "github.com/lib/pq"
-	"log"
 	"net/http"
 )
 
@@ -21,8 +20,6 @@ func InitApp() App {
 	config := createConfig()
 
 	db := NewDB(config)
-
-	log.Println(config)
 
 	middleware := NewMiddleware()
 	middleware.Use(NewLogger())

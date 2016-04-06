@@ -10,10 +10,6 @@ func (f FilterHandlerFunc) Handle(context *Context, next HandlerInterface) *Erro
 	return f(context, next)
 }
 
-func (f FilterHandlerFunc) Filters() []FilterHandler {
-	return make([]FilterHandler, 0)
-}
-
 type Filter struct {
 	handler FilterHandler
 	next    *Filter
