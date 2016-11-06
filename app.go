@@ -1,25 +1,37 @@
 package hippo
 
 import (
-	"database/sql"
 	"errors"
 	"flag"
-	_ "github.com/lib/pq"
+	"fmt"
+	"log"
 	"net/http"
+
+	"github.com/birwin93/db"
+
+	_ "github.com/lib/pq"
 )
 
 type App struct {
 	router     *Router
 	middleware *Middleware
-	db         *sql.DB
+	db         *db.Database
 	config     *Config
 }
 
-func InitApp() App {
+func NewApp() App {
 
 	config := createConfig()
 
-	db := NewDB(config)
+	dbConfig := db.Config{
+		Name:      config.Database.Name,
+		User:      config.Database.User,
+		EnableSSL: false,
+	}
+	db, err := db.NewDB(dbConfig)
+	if err != nil {
+		panic(err)
+	}
 
 	middleware := NewMiddleware()
 	middleware.Use(NewLogger())
@@ -29,6 +41,12 @@ func InitApp() App {
 
 	app := App{router, middleware, db, config}
 	return app
+}
+
+func (a App) Start(host string, port string) {
+	log.Println("Starting up server")
+	address := fmt.Sprintf("%s:%s", host, port)
+	http.ListenAndServe(address, a)
 }
 
 func (a App) Add(pattern string, h HandlerInterface) {

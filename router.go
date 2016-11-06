@@ -56,7 +56,6 @@ func (p *Router) Add(pattern string, h HandlerInterface) {
 
 		//TODO add error handling here to avoid panic
 		panic(regexErr)
-		return
 	}
 
 	//now create the Route

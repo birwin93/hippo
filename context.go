@@ -1,16 +1,17 @@
 package hippo
 
 import (
-	"database/sql"
-	_ "github.com/lib/pq"
 	"net/http"
 	"net/url"
+
+	"github.com/birwin93/db"
 )
 
 type Context struct {
 	ResponseWriter http.ResponseWriter
 	Request        *http.Request
 	Params         url.Values
-	DB             *sql.DB
+	DB             *db.Database
 	Config         *Config
+	UserId         int64
 }
