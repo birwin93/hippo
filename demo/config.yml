@@ -1,0 +1,16 @@
+# Database Info
+database:
+  development:
+    name: "billy"
+    user: "billy"
+    password: "billy"
+
+  test:
+    name: "billy"
+    user: "billy"
+    password: "billy"
+
+  production:
+    name: "billy"
+    user: "billy"
+    password: "billy"

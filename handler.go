@@ -1,5 +1,9 @@
 package hippo
 
+import (
+	"encoding/json"
+)
+
 type HandlerInterface interface {
 	Handle(context *Context) *Error //process request
 	Filters() []FilterHandler       //filters for request eg. Auth
@@ -13,4 +17,12 @@ func (h *Handler) Handle(context *Context) *Error {
 
 func (h *Handler) Filters() []FilterHandler {
 	return make([]FilterHandler, 0)
+}
+
+func (h *Handler) WriteJSON(ct *Context, data interface{}) *Error {
+	err := json.NewEncoder(ct.ResponseWriter).Encode(data)
+	if err != nil {
+		return NewError(300, "Error packing json")
+	}
+	return nil
 }

@@ -7,15 +7,13 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/birwin93/db"
-
 	_ "github.com/lib/pq"
 )
 
 type App struct {
 	router     *Router
 	middleware *Middleware
-	db         *db.Database
+	db         *Database
 	config     *Config
 }
 
@@ -23,12 +21,7 @@ func NewApp() App {
 
 	config := createConfig()
 
-	dbConfig := db.Config{
-		Name:      config.Database.Name,
-		User:      config.Database.User,
-		EnableSSL: false,
-	}
-	db, err := db.NewDB(dbConfig)
+	db, err := NewDB(config.Database)
 	if err != nil {
 		panic(err)
 	}

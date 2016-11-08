@@ -1,9 +1,10 @@
 package hippo
 
 import (
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"path/filepath"
+
+	"gopkg.in/yaml.v2"
 )
 
 type DatabaseConfig struct {
